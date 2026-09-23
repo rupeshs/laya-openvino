@@ -1,0 +1,49 @@
+# Derived from https://github.com/NandhaKishorM/laya (Apache License 2.0).
+# Modified by Rupesh Sreeraman, 2026: added OpenVINO backend support.
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "laya-openvino"
+version = "0.3.5"
+description = "Laya with an OpenVINO backend: fast, non-autoregressive System 1 decisions with calibrated probabilities"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Convai Innovations" },
+    { name = "Rupesh Sreeraman" },
+]
+keywords = ["decision-model", "rlcd", "calibration", "system-one", "routing", "guardrails", "moderation", "triage"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "torch>=2.0.0",
+    "transformers>=4.48.0",
+    "safetensors>=0.4.0",
+    "huggingface_hub>=0.20.0",
+    "numpy>=1.20.0",
+]
+
+[project.optional-dependencies]
+openvino = ["openvino>=2024.0"]
+
+[tool.setuptools]
+# assets/, research/ and notebooks/ sit in the root, so auto-discovery bails out.
+packages = ["laya"]
+
+[project.urls]
+Repository = "https://github.com/rupeshs/laya-openvino"
+Upstream = "https://github.com/NandhaKishorM/laya"
+Homepage = "https://huggingface.co/convaiinnovations/laya"
+Demo = "https://huggingface.co/spaces/convaiinnovations/laya-demo"

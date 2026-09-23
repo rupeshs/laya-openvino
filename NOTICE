@@ -1,0 +1,19 @@
+Laya OpenVINO
+Copyright 2026 Rupesh Sreeraman
+
+This product is derived from Laya (https://github.com/NandhaKishorM/laya),
+developed by Convai Innovations and licensed under the Apache License, Version 2.0.
+
+This is an unofficial project. It is not affiliated with or endorsed by
+Convai Innovations.
+
+Changes from the original work:
+  - Added an OpenVINO export and inference backend (laya/ov.py, OVAgent).
+  - Moved shared pre/post-processing into laya/common.py (prepare_batch,
+    decode_answers) so the torch and OpenVINO backends share one path.
+  - Added OpenVINO tests (tests/test_ov.py) and weight-quantization tooling
+    (research/scripts/quantize_ov.py, research/scripts/bench_quantization.py).
+  - Updated packaging, CI workflows and documentation accordingly.
+
+Model checkpoints (convaiinnovations/laya and related Hugging Face repositories)
+are distributed separately under their own licenses and are not included here.
