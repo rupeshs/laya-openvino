@@ -33,10 +33,8 @@ dependencies = [
     "safetensors>=0.4.0",
     "huggingface_hub>=0.20.0",
     "numpy>=1.20.0",
+    "openvino>=2024.0",
 ]
-
-[project.optional-dependencies]
-openvino = ["openvino>=2024.0"]
 
 [tool.setuptools]
 # assets/, research/ and notebooks/ sit in the root, so auto-discovery bails out.

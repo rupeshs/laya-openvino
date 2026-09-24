@@ -5,6 +5,11 @@
   </picture>
 </p>
 
+<p align="center">
+  <a href="https://huggingface.co/rupeshs/laya-ov-int8"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-rupeshs%2Flaya--ov--int8-blue" alt="Hugging Face model: rupeshs/laya-ov-int8" /></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="License: Apache 2.0" /></a>
+</p>
+
 > **Unofficial OpenVINO-focused derivative of [Laya](https://github.com/NandhaKishorM/laya)** by Convai Innovations (Apache 2.0). Not affiliated with or endorsed by Convai Innovations. See [NOTICE](NOTICE) for the list of changes.
 
 This fork adds an **OpenVINO backend** to Laya for fast CPU inference. Export a Laya checkpoint to OpenVINO IR once (or download a pre-converted one), then serve it with `OVAgent` -- the forward pass runs on OpenVINO, not torch.
@@ -13,14 +18,22 @@ This fork adds an **OpenVINO backend** to Laya for fast CPU inference. Export a 
 
 For the model itself (question types, routing, benchmarks, fine-tuning), see the upstream project: **[NandhaKishorM/laya](https://github.com/NandhaKishorM/laya)**.
 
+## Pre-converted model
+
+| model | source checkpoint | weights | size | top-answer agreement vs torch |
+|---|---|---|---|---|
+| [`rupeshs/laya-ov-int8`](https://huggingface.co/rupeshs/laya-ov-int8) | [`convaiinnovations/laya`](https://huggingface.co/convaiinnovations/laya) (English) | int8 | 405 MB | 98.9% |
+
+It contains the OpenVINO IR, the tokenizer and `rl_agent_config.json`, so `OVAgent` loads it directly. See [Option A](#option-a-download-the-pre-converted-int8-model) below.
+
 ---
 
 ## Installation
 
-Not on PyPI. Install straight from GitHub with the `openvino` extra; the import name is still `laya`:
+Not on PyPI. Install straight from GitHub; the import name is still `laya`:
 
 ```bash
-pip install "laya-openvino[openvino] @ git+https://github.com/rupeshs/laya-openvino.git"
+pip install git+https://github.com/rupeshs/laya-openvino.git
 ```
 
 This replaces the upstream PyPI `laya` package if it is installed in the same environment. Python 3.10 or newer.
@@ -141,9 +154,10 @@ The default fp16 export is a *storage* change only -- the math still runs in fp3
 
 ### Quantizing to int8
 
-The exporter has no `--int8` flag; quantize the IR after exporting:
+The exporter has no `--int8` flag; quantize the IR after exporting. This step needs [NNCF](https://github.com/openvinotoolkit/nncf):
 
 ```bash
+pip install nncf
 python -m laya.ov export convaiinnovations/laya --out laya-ov
 python research/scripts/quantize_ov.py laya-ov laya-ov-int8 --mode int8
 ```
