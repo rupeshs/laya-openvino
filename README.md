@@ -152,6 +152,15 @@ uv run --no-project --with-requirements requirements.txt app.py
 
 Then open http://127.0.0.1:7860.
 
+The demo runs on the CPU by default. To use another OpenVINO device, such as an Intel integrated GPU, set `LAYA_DEVICE` (`CPU`, `GPU`, `GPU.0`, `GPU.1`, ...):
+
+```bash
+LAYA_DEVICE=GPU python app.py            # Linux / macOS
+$env:LAYA_DEVICE = "GPU"; python app.py  # Windows PowerShell
+```
+
+The device in use is printed at startup and shown on the page. A GPU is not always faster: on an i7-12700, its UHD Graphics 770 iGPU took 241 ms per request against 48 ms on the CPU.
+
 ---
 
 ## 4. Flappy Bird example

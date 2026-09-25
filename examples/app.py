@@ -5,6 +5,8 @@ Run locally from this folder:
     pip install -r requirements.txt && python app.py
     # or
     uv run --no-project --with-requirements requirements.txt app.py
+
+Set LAYA_DEVICE to run on another OpenVINO device, e.g. LAYA_DEVICE=GPU for the integrated GPU.
 """
 
 import html
@@ -24,6 +26,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 MODEL_REPO = "rupeshs/laya-ov-int8"
 MODEL_WEIGHTS = "int8"
 MODEL_DIR = os.path.join(HERE, "laya-ov-int8")
+# OpenVINO device: CPU (default), GPU, GPU.0, GPU.1, ... Upper-cased because OpenVINO names are.
+DEVICE = os.environ.get("LAYA_DEVICE", "CPU").strip().upper() or "CPU"
 
 
 def ensure_ir():
@@ -270,8 +274,9 @@ def run(state_text, questions_text):
 
 
 ensure_ir()
-AGENT = OVAgent(MODEL_DIR)
-CPU_NAME = ov.Core().get_property("CPU", "FULL_DEVICE_NAME")
+DEVICE_NAME = ov.Core().get_property(DEVICE, "FULL_DEVICE_NAME")
+print("Loading %s on %s (%s) ..." % (MODEL_REPO, DEVICE, DEVICE_NAME), flush=True)
+AGENT = OVAgent(MODEL_DIR, device=DEVICE)
 # The first calls compile kernels for new shapes; keep that out of the numbers people see.
 # The default is a one-question request, so also warm a multi-question preset.
 for _ in range(2):
@@ -280,7 +285,7 @@ for _ in range(2):
 
 HERO = """
 <div class="hero">
-  <h1>Laya - CPU (OpenVINO %s)</h1>
+  <h1>Laya - %s (OpenVINO %s)</h1>
   <p><a href="https://huggingface.co/convaiinnovations/laya" target="_blank">Laya</a> answers typed
   questions about text or JSON in <b>a single forward pass</b></p>
   <p class="links"><a href="https://github.com/rupeshs/laya-openvino" target="_blank"><img
@@ -292,7 +297,7 @@ HERO = """
     <span><b>noul</b> is it true?</span>
   </div>
 </div>
-""" % html.escape(MODEL_WEIGHTS)
+""" % (html.escape(DEVICE), html.escape(MODEL_WEIGHTS))
 
 
 def info_card(label, value, sub, href=None):
@@ -308,10 +313,10 @@ def info_card(label, value, sub, href=None):
 
 SYSTEM_INFO = '<div class="info-row">%s%s</div>' % (
     info_card(
-        "Processor (CPU)",
-        CPU_NAME,
-        "%d logical cores · OpenVINO %s"
-        % (os.cpu_count(), ov.__version__.split("-")[0]),
+        "Device (%s)" % DEVICE,
+        DEVICE_NAME,
+        ("%d logical cores · " % os.cpu_count() if DEVICE == "CPU" else "")
+        + "OpenVINO %s" % ov.__version__.split("-")[0],
     ),
     info_card(
         "Model", MODEL_REPO, describe_model(), "https://huggingface.co/" + MODEL_REPO
