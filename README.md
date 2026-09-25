@@ -81,6 +81,9 @@ The export directory is self-contained (IR, tokenizer and `rl_agent_config.json`
 
 ```python
 import laya
+from huggingface_hub import snapshot_download
+
+snapshot_download("rupeshs/laya-ov-int8", local_dir="laya-ov-int8")  # skip if you exported your own
 
 agent = laya.OVAgent("laya-ov-int8")   # or "laya-ov"; device="CPU" by default
 
