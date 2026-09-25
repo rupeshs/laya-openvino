@@ -151,6 +151,16 @@ Then open http://127.0.0.1:7860.
 
 ---
 
+## 4. Flappy Bird example
+
+[flappy-laya-openvino-cpu](https://github.com/rupeshs/flappy-laya-openvino-cpu) is a Flappy Bird game played by Laya running on the OpenVINO backend on CPU.
+
+![Flappy Bird played by Laya on OpenVINO, with per-frame flap probabilities and CPU usage](assets/flappy_gameplay.jpg)
+
+Watch it play: [YouTube demo](https://www.youtube.com/watch?v=YfT6GL9sqwk)
+
+---
+
 ## Performance
 
 Measured on a 12th-gen Intel CPU, three questions over a short state: **301 ms torch → 180 ms OpenVINO (1.7x)**, with top answers unchanged and probabilities agreeing to within 0.0001. Your numbers will differ by CPU.
