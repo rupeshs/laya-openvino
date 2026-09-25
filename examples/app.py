@@ -72,7 +72,13 @@ EXAMPLES = {
             "satisfaction": {
                 "type": "score",
                 "instructions": "How satisfied is the reviewer in `text`?",
-                "criteria": ["very unhappy", "unhappy", "neutral", "happy", "very happy"],
+                "criteria": [
+                    "very unhappy",
+                    "unhappy",
+                    "neutral",
+                    "happy",
+                    "very happy",
+                ],
             }
         },
     ),
@@ -276,8 +282,7 @@ HERO = """
 <div class="hero">
   <h1>Laya - CPU (OpenVINO %s)</h1>
   <p><a href="https://huggingface.co/convaiinnovations/laya" target="_blank">Laya</a> answers typed
-  questions about text or JSON in <b>a single forward pass</b>. It never generates text, so there
-  is nothing to parse and nothing to hallucinate.</p>
+  questions about text or JSON in <b>a single forward pass</b></p>
   <p class="links"><a href="https://github.com/rupeshs/laya-openvino" target="_blank"><img
     src="https://img.shields.io/badge/GitHub-laya--openvino-181717?logo=github&logoColor=white"
     alt="GitHub: rupeshs/laya-openvino"></a></p>
@@ -323,7 +328,7 @@ CSS = """
 .gradio-container { width: 100% !important; max-width: none !important; margin: 0 !important;
   padding: 0 24px !important; box-sizing: border-box; }
 @media (max-width: 640px) { .gradio-container { padding: 0 16px !important; } }
-.hero { text-align: center; padding: 40px 0 8px; }
+.hero { text-align: center; padding: 5px 0 8px; }
 .hero .eyebrow { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px;
   font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--color-accent);
   background: var(--color-accent-soft); }
