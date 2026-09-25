@@ -1,9 +1,6 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/NandhaKishorM/laya/main/assets/logo-lockup-dark.png" />
-    <img src="https://raw.githubusercontent.com/NandhaKishorM/laya/main/assets/logo-lockup.png" alt="Laya" width="330" />
-  </picture>
-</p>
+
+
+<h1 align="center">laya-openvino</h1>
 
 <p align="center">
   <a href="https://huggingface.co/rupeshs/laya-ov-int8"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-rupeshs%2Flaya--ov--int8-blue" alt="Hugging Face model: rupeshs/laya-ov-int8" /></a>
@@ -130,6 +127,27 @@ agent = laya.OVAgent("laya-ov-int8", device="CPU", ov_config={"PERFORMANCE_HINT"
 ```
 
 The English checkpoint is trained on English text; accuracy drops sharply on other languages, especially non-Latin scripts, while its confidence stays high. Only send it English input.
+
+---
+
+## 3. Try the Gradio demo
+
+[`examples/app.py`](examples/app.py) is a web demo: pick a preset (sentiment, support triage, phishing, LLM guard, moderation, model routing) or write your own state and questions, and see the answers with their latency. On first run it downloads [`rupeshs/laya-ov-int8`](https://huggingface.co/rupeshs/laya-ov-int8) (405 MB) into `examples/laya-ov-int8/`.
+
+From the `examples/` folder:
+
+```bash
+pip install -r requirements.txt
+python app.py
+```
+
+or with [uv](https://docs.astral.sh/uv/):
+
+```bash
+uv run --no-project --with-requirements requirements.txt app.py
+```
+
+Then open http://127.0.0.1:7860.
 
 ---
 

@@ -1,0 +1,2 @@
+gradio
+laya-openvino @ git+https://github.com/rupeshs/laya-openvino.git
